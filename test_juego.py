@@ -1,5 +1,5 @@
 import unittest
-from main import numero_aleatorio, jugar
+from juego import numero_aleatorio, jugar
 
 class TestGenerarNumeroSecreto(unittest.TestCase):
     def test_numero_aleatorio(self):
