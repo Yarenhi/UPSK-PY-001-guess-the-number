@@ -1,4 +1,9 @@
 import random
+from colorama import init, Fore, Back, Style
+
+# Inicializar colorama (esto es necesario en Windows)
+init()
+
 
 def numero_aleatorio():
     """Genera un número aleatorio entre 1 y 100."""
@@ -6,7 +11,7 @@ def numero_aleatorio():
 
 def jugar():
     """Función principal para jugar al juego de adivinar el número."""
-    print("Bienvenido al juego de adivinar el número!")
+    print(Fore.MAGENTA +"¡Bienvenido al juego adivina el número!")
 
     while True:
         # Generamos un número secreto
@@ -24,7 +29,7 @@ def jugar():
 
             # Comparamos el intento con el número secreto
             if intento == numero_secreto:
-                print(f"¡Felicidades! Has adivinado el número secreto {numero_secreto} en {intentos} intentos.")
+                print(Style.BRIGHT + f"¡Felicidades! Has adivinado el número secreto {numero_secreto} en {intentos} intentos.")
                 print("Suposiciones realizadas:", suposiciones)  # Mostramos las suposiciones realizadas
                 break
             elif intento < numero_secreto:
