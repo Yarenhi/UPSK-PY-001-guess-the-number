@@ -1,47 +1,65 @@
 import random
-from colorama import init, Fore, Back, Style
+from colorama import init, Fore, Style
 
 # Inicializar colorama (esto es necesario en Windows)
 init()
-
 
 def numero_aleatorio():
     """Genera un número aleatorio entre 1 y 100."""
     return random.randint(1, 100)
 
+def mostrar_mensaje_bienvenida(nombre):
+    """Muestra un mensaje de bienvenida al inicio del juego."""
+    print(Fore.CYAN + f"Bienvenido al juego adivina el número, {nombre}!")
+
+def solicitar_suposicion(nombre):
+    """Solicita al jugador que ingrese su suposición."""
+    return int(input(f"{nombre}, ingresa tu suposición: "))
+
+def comparar_suposicion(numero_secreto, suposicion):
+    """Compara la suposición del jugador con el número secreto."""
+    if suposicion == numero_secreto:
+        return "acertaste"
+    elif suposicion < numero_secreto:
+        return "mayor"
+    else:
+        return "menor"
+
+def jugar_nuevo():
+    """Pregunta al jugador si quiere jugar de nuevo."""
+    return input("¿Quieres jugar de nuevo? (s/n): ").lower() == 's'
+
 def jugar():
     """Función principal para jugar al juego de adivinar el número."""
-    print(Fore.MAGENTA +"¡Bienvenido al juego adivina el número!")
+    nombre = input("Por favor, ingresa tu nombre: ")
+    mostrar_mensaje_bienvenida(nombre)
 
     while True:
-        # Generamos un número secreto
         numero_secreto = numero_aleatorio()
         intentos = 0
-        suposiciones = []  # Lista para almacenar las suposiciones de la jugadora
+        suposiciones = []
 
-        print("He pensado en un número entre 1 y 100. ¡Adivina!")
+        print(Fore.YELLOW + "He pensado en un número entre 1 y 100. ¡Adivina!")
 
         while True:
-            # Solicitamos a la jugadora que adivine el número
-            intento = int(input("Tu suposición: "))
+            intento = solicitar_suposicion(nombre)
             intentos += 1
-            suposiciones.append(intento)  # Agregamos el intento a la lista de suposiciones
+            suposiciones.append(intento)
 
-            # Comparamos el intento con el número secreto
-            if intento == numero_secreto:
-                print(Style.BRIGHT + f"¡Felicidades! Has adivinado el número secreto {numero_secreto} en {intentos} intentos.")
-                print("Suposiciones realizadas:", suposiciones)  # Mostramos las suposiciones realizadas
+            resultado = comparar_suposicion(numero_secreto, intento)
+            if resultado == "acertaste":
+                print(Style.BRIGHT + Fore.GREEN + f"¡Felicidades, {nombre}! Has adivinado el número secreto {numero_secreto} en {intentos} intentos.")
+                print("Suposiciones realizadas:", suposiciones)
                 break
-            elif intento < numero_secreto:
-                print("El número secreto es mayor.")
+            elif resultado == "mayor":
+                print(Fore.RED + "El número secreto es mayor.")
             else:
-                print("El número secreto es menor.")
+                print(Fore.RED + "El número secreto es menor.")
 
-        # Preguntamos si la jugadora quiere jugar de nuevo
-        jugar_nuevamente = input("¿Quieres jugar de nuevo? (s/n): ")
-        if jugar_nuevamente.lower() != 's':
-            print("Gracias por jugar. ¡Hasta luego!")
+        if not jugar_nuevo():
+            print(Fore.CYAN + "Gracias por jugar. ¡Hasta luego, " + nombre + "!")
             break
 
 if __name__ == "__main__":
     jugar()
+
