@@ -1,7 +1,7 @@
 import random
 from colorama import init, Fore, Style
 
-# Inicializar colorama (esto es necesario en Windows)
+# Inicializar colorama 
 init()
 
 def numero_aleatorio():
